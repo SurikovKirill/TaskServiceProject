@@ -1,14 +1,46 @@
+from enum import Enum
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+class TaskStatus(Enum):
+    REQUESTED = "REQUESTED"
+    PLANNED = "PLANNED"
+    ISSUED = "ISSUED"
+    COMPLETED = "COMPLETED"
+    CONTROLLED = "CONTROLLED"
+    FILED = "FILED"
+    DELETED = "DELETED"
+
+    @classmethod
+    def choices(cls):
+        print(tuple((i.name, i.value) for i in cls))
+        return tuple((i.name, i.value) for i in cls)
+
+
+class TaskType(Enum):
+    SCHEDULED = "SCHEDULED"
+    UNSCHEDULED = "UNSCHEDULED"
+
+    @classmethod
+    def choices(cls):
+        print(tuple((i.name, i.value) for i in cls))
+        return tuple((i.name, i.value) for i in cls)
+
+class UserPosition(Enum):
+    MANAGER = "MANAGER"
+    WORKER = "WORKER"
+
+    @classmethod
+    def choices(cls):
+        print(tuple((i.name, i.value) for i in cls))
+        return tuple((i.name, i.value) for i in cls)
+
 class Tasks(models.Model):
-    STATUS_CHOICES = ('requested', 'planned', 'issued', 'completed', 'controlled', 'filed', 'deleted')
-    TYPE_CHOICES = ('scheduled', 'unscheduled')
     creation_date = models.DateField()
     ending_date = models.DateField()
-    status = models.CharField(choices=STATUS_CHOICES)
-    type = models.CharField(choices=TYPE_CHOICES)
+    status = models.CharField(choices=TaskStatus.chices())
+    type = models.CharField(choices=TaskType.choices())
     description = models.CharField()
     report = models.CharField()
     link_to_object = models.CharField()
@@ -22,10 +54,9 @@ class Tasks(models.Model):
 
 
 class User(AbstractUser):
-    POSITION_CHOICES = ('manager', 'worker')
     name = models.CharField()
     surname = models.CharField()
-    position = models.CharField(choices=POSITION_CHOICES)
+    position = models.CharField(choices=UserPosition.choices())
 
 
 class WorkersTasks(models.Model):
