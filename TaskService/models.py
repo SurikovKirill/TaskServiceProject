@@ -39,12 +39,12 @@ class UserPosition(Enum):
 class Tasks(models.Model):
     creation_date = models.DateField()
     ending_date = models.DateField()
-    status = models.CharField(choices=TaskStatus.chices())
-    type = models.CharField(choices=TaskType.choices())
-    description = models.CharField()
-    report = models.CharField()
-    link_to_object = models.CharField()
-    link_to_component = models.CharField()
+    status = models.CharField(max_length=255, choices=TaskStatus.choices())
+    type = models.CharField(max_length=255, choices=TaskType.choices())
+    description = models.TextField()
+    report = models.CharField(max_length=100)
+    link_to_object = models.CharField(max_length=100)
+    link_to_component = models.CharField(max_length=100)
 
     class Meta:
         ordering = ('creation_date',)
@@ -54,9 +54,9 @@ class Tasks(models.Model):
 
 
 class User(AbstractUser):
-    name = models.CharField()
-    surname = models.CharField()
-    position = models.CharField(choices=UserPosition.choices())
+    name = models.CharField(max_length=50)
+    surname = models.CharField(max_length=50)
+    position = models.CharField(max_length=255, choices=UserPosition.choices())
 
 
 class WorkersTasks(models.Model):
