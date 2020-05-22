@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from TaskService.models import User, Task, TaskStatus, TaskType, UserPosition
+from TaskService.models import User, Task
 
 
 class TaskSerializer(serializers.ModelSerializer):
