@@ -53,7 +53,7 @@ class Log(models.Model):
     ending_date = models.DateField()
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
     description = models.TextField()
-    report = models.FilePathField(path="home/reports", max_length=255)
+    report = models.CharField(max_length=255)
     link_to_object = models.CharField(max_length=255)
     link_to_component = models.CharField(max_length=255)
     user = JSONField()
