@@ -36,9 +36,9 @@ class Task(models.Model):
     status = models.CharField(max_length=255, choices=TaskStatus.choices())
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
     description = models.TextField()
-    report = models.CharField(max_length=100)
-    link_to_object = models.CharField(max_length=100)
-    link_to_component = models.CharField(max_length=100)
+    report = models.FilePathField(path="home/reports", max_length=255)
+    link_to_object = models.CharField(max_length=255)
+    link_to_component = models.CharField(max_length=255)
     workers = models.ManyToManyField(User)
 
     class Meta:
@@ -53,9 +53,9 @@ class Log(models.Model):
     ending_date = models.DateField()
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
     description = models.TextField()
-    report = models.CharField(max_length=100)
-    link_to_object = models.CharField(max_length=100)
-    link_to_component = models.CharField(max_length=100)
+    report = models.FilePathField(path="home/reports", max_length=255)
+    link_to_object = models.CharField(max_length=255)
+    link_to_component = models.CharField(max_length=255)
     user = JSONField()
 
     class Meta:
