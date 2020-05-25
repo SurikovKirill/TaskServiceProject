@@ -1,7 +1,7 @@
 from enum import Enum
 from django.db import models
 from django.contrib.postgres.fields import JSONField
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 
@@ -31,15 +31,15 @@ class TaskType(Enum):
 
 
 class Task(models.Model):
-    creation_date = models.DateField()
-    ending_date = models.DateField()
+    creation_date = models.DateField(null=True)
+    ending_date = models.DateField(null=True)
     status = models.CharField(max_length=255, choices=TaskStatus.choices())
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
-    description = models.TextField()
-    report = models.FilePathField(path="home/reports", max_length=255)
-    link_to_object = models.CharField(max_length=255)
-    link_to_component = models.CharField(max_length=255)
-    workers = models.ManyToManyField(User)
+    description = models.TextField(null=True)
+    report = models.FilePathField(path="home/reports", max_length=255, null=True)
+    object_data = JSONField(null=True)
+    components = JSONField(null=True)
+    worker = models.ManyToManyField(User, blank=True)
 
     class Meta:
         ordering = ('creation_date',)
@@ -54,9 +54,9 @@ class Log(models.Model):
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
     description = models.TextField()
     report = models.CharField(max_length=255)
-    link_to_object = models.CharField(max_length=255)
-    link_to_component = models.CharField(max_length=255)
-    user = JSONField()
+    object_data = JSONField(null=True)
+    components = JSONField(null=True)
+    user = JSONField(null=True)
 
     class Meta:
         ordering = ('-ending_date',)
