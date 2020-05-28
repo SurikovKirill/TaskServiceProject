@@ -33,8 +33,9 @@ class CreateTaskSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Task
-        fields = ['creation_date', 'ending_date', 'status', 'task_type', 'description',
+        fields = ['id','creation_date', 'ending_date', 'status', 'task_type', 'description',
                   'object_data', 'components', 'worker']
+
 
 class WorkSerializer(serializers.ModelSerializer):
     worker = WorkerSerializer(many=True)

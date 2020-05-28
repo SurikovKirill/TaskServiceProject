@@ -2,7 +2,7 @@ from enum import Enum
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+
 
 
 class TaskStatus(Enum):
@@ -35,8 +35,8 @@ class Task(models.Model):
     ending_date = models.DateField(null=True)
     status = models.CharField(max_length=255, choices=TaskStatus.choices())
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
-    description = models.TextField(null=True)
-    report = models.FilePathField(path="home/reports", max_length=255, null=True)
+    description = models.TextField()
+    report = models.CharField(null=True, blank=True, max_length=255)
     object_data = JSONField(null=True)
     components = JSONField(null=True)
     worker = models.ManyToManyField(User, blank=True)
@@ -53,7 +53,7 @@ class Log(models.Model):
     ending_date = models.DateField()
     task_type = models.CharField(max_length=255, choices=TaskType.choices())
     description = models.TextField()
-    report = models.CharField(max_length=255)
+    report = models.CharField(null=True, blank=True, max_length=255)
     object_data = JSONField(null=True)
     components = JSONField(null=True)
     user = JSONField(null=True)
